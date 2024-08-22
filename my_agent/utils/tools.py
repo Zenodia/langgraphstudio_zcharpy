@@ -26,7 +26,7 @@ def llm_rewrite_to_image_prompts(user_query):
         [
             (
                 "system",
-                "Summarize the following user query into a very short, one-sentence theme for image generation, MUST follow this format : A 3D full body anime image with white background"
+                "Summarize the following user query into a very short, one-sentence theme for image generation, MUST follow this format : A highly detail photo of"
             ),
             ("user", "{input}"),
         ]
