@@ -67,7 +67,7 @@ def generate_image( prompt :str) -> str :
     ## load back to numpy array 
     print(response_body['artifacts'][0].keys())
     imgdata = base64.b64decode(response_body["artifacts"][0]["base64"])
-    filename = os.path.join("C:/Users/zcharpy/Documents/langgraph-example/imgs/",llm_rewrite_to_image_name(prompt))
+    filename = 'output.jpg'
     print("image is saved to " , filename)
     with open(filename, 'wb') as f:
         f.write(imgdata)   
