@@ -31,12 +31,6 @@ def llm_rewrite_to_image_prompts(user_query):
     #print(type(out))
     return out
 
-def llm_rewrite_to_image_name(user_query):
-    img_name = "output.jpg"
-    return img_name
-
-
-
 def generate_image( prompt :str) -> str :
     """
     generate image from text
