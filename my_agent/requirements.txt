@@ -3,3 +3,5 @@ langchain_anthropic
 tavily-python
 langchain_community
 langchain_openai
+langchain-nvidia-ai-endpoints==0.2.1
+openai
