@@ -123,5 +123,5 @@ def story_creator(prompt):
     char_bk='\n'.join([(c,b) for (c,b) in zip(output.characters, output.background_story)])
     story_output=f"The theme of the story is :{output.theme} \n the plot of the story is : { output.story_plot} \n . There are the characters and their background stories : {char_bk}"
     return story_output
-tools = [generate_image]
+tools = [generate_image, story_creator]
 
