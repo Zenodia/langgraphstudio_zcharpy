@@ -14,6 +14,8 @@ from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain_core.language_models import LLM
 
 nvapi_key = os.environ["NVIDIA_API_KEY"]
+llm=ChatNVIDIA(model="meta/llama-3.1-405b-instruct")
+
 def llm_rewrite_to_image_prompts(user_query):
     prompt = prompts.ChatPromptTemplate.from_messages(
         [
@@ -30,8 +32,7 @@ def llm_rewrite_to_image_prompts(user_query):
     return out
 
 def llm_rewrite_to_image_name(user_query):
-    output = write_image_name.invoke({"input": user_query})
-    img_name = f"{output.Name.lower()}.{output.Format.lower()}"                            
+    img_name = "output.jpg"
     return img_name
 
 

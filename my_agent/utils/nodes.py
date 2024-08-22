@@ -2,6 +2,7 @@ from functools import lru_cache
 from my_agent.utils.tools import tools
 from langgraph.prebuilt import ToolNode
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
+import os
 nvapi_key=os.environ["NVIDIA_API_KEY"]
 @lru_cache(maxsize=4)
 def _get_model(model_name: str):
