@@ -16,9 +16,6 @@ from langchain_core.language_models import LLM
 from langgraph.graph import END, StateGraph, MessageGraph
 from typing import List, Tuple, Annotated, TypedDict , Optional
 import operator
-from langchain_openai import ChatOpenAI
-from langchain_core.runnables import RunnablePassthrough
-from langchain_core.pydantic_v1 import BaseModel, Field, validator
 
 
 nvapi_key = os.environ["NVIDIA_API_KEY"]
@@ -77,51 +74,5 @@ def generate_image( prompt :str) -> str :
     img_location=filename
     return img_location
 
-
-
-## structural output using LMFE 
-class ScenePlot(BaseModel):     
-    story_plot: str = Field(description="story plot for the scene")
-    characters : List[str] = Field(description="a list of the name of characters in this story plot")
-    background_story : List[str] = Field(description="a list of the background story for each character, ordered and aligned with the name listed above.")
-    theme: str = Field(description="the central theme of the story")
-    genre: str = Field(description="genre of the scene usually sci-fi, drama, horrow, comedy, thriller, romance and so on")
-
-llm_with_sceneplot=llm.with_structured_output(ScenePlot)     
-
-scene_creation_prompt = ChatPromptTemplate.from_template("""Act as an experienced screen scriptwriter.
-    Develop one linear plotline, character arcs, or unique concepts based on the given [theme] and [genre]. 
-    You are to develop one scene only. Explore innovative angles and replace human characters with animal characters.
-    Ensure you create up to maximum 3 characters for the entire story.
-    The entire story should be linear, short, compact and compelling for a wide audience. 
-    Divulge just enough info to provide a clear direction of the story line.
-
-    Ensure to include brief plot, character arcs and
-    
-    You will need to specify the below into your scene scripts :
-    -----
-    story_plot : what this story is about
-    characters : a list of the name for characters ordered by their appearance in the storyline.
-    background_story : a list background story for each character, ordered and aligned with the name listed above.
-    theme : what is the theme
-    genre : what is the genre
-    
-    -----
-    movie director input :
-    theme: {theme} 
-    genre: {genre} """)
-                                              
-scene_chain = scene_creation_prompt | llm_with_sceneplot
-
-def story_creator(prompt):
-    none_output=True
-    while none_output ==True :
-        output=scene_chain.invoke({"theme": "write me a short story about the friendship between a dragon and a little girl" , "genre":"comedy"})
-        if type(output) is not None:
-            none_output=False
-            break
-    char_bk='\n'.join([(c,b) for (c,b) in zip(output.characters, output.background_story)])
-    story_output=f"The theme of the story is :{output.theme} \n the plot of the story is : { output.story_plot} \n . There are the characters and their background stories : {char_bk}"
-    return story_output
-tools = [generate_image, story_creator]
+tools = [generate_image]
 
